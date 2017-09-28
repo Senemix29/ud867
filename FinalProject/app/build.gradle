@@ -26,5 +26,6 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.google.android.gms:play-services-ads:11.4.0'
-    compile project(":jokeLib")
+    compile project(':jokelib')
+    compile project(':jokedisplayer')
 }
