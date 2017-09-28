@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="br.com.natanximenes.jokeDisplayer">
+
+    <application
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:label="@string/app_name"
+            android:name=".JokeDisplayerActivity" />
+    </application>
+</manifest>
