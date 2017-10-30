@@ -9,11 +9,13 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button jokeButton;
     JokeEndpointAsyncTask jokeEndpointAsyncTask;
+    JokeService jokeService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        jokeService = new JokeService();
 
         jokeButton = findViewById(R.id.joke_button);
         jokeButton.setOnClickListener(this);
@@ -21,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        jokeEndpointAsyncTask = new JokeEndpointAsyncTask(this);
+        jokeEndpointAsyncTask = jokeService.retrieveJokeTask(this);
         jokeEndpointAsyncTask.execute();
     }
 }
