@@ -12,6 +12,16 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    productFlavors {
+        free {
+            applicationIdSuffix ".free"
+            versionNameSuffix "-free"
+        }
+        paid {
+            applicationIdSuffix ".premium"
+            versionNameSuffix "-premium"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -26,7 +36,7 @@ android {
 dependencies {
     compile project(':jokedisplayer')
     compile 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.google.android.gms:play-services-ads:11.4.0'
+    freeCompile 'com.google.android.gms:play-services-ads:11.4.0'
     compile 'com.google.code.findbugs:jsr305:2.0.1'
     compile 'com.google.api-client:google-api-client:1.23.0'
     compile 'com.google.http-client:google-http-client-android:1.23.0'
