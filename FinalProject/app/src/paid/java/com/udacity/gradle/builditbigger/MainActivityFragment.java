@@ -5,8 +5,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment implements View.OnClickListener{
+    Button jokeButton;
+    JokeEndpointAsyncTask jokeEndpointAsyncTask;
+    JokeService jokeService;
 
     public MainActivityFragment() {
     }
@@ -15,6 +19,23 @@ public class MainActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
+        jokeService = new JokeService();
+
+        jokeButton = root.findViewById(R.id.joke_button);
+        jokeButton.setOnClickListener(this);
+
         return root;
     }
+
+
+    @Override
+    public void onClick(View view) {
+        retrieveJoke();
+    }
+
+    private void retrieveJoke() {
+        jokeEndpointAsyncTask = jokeService.retrieveJokeTask(getContext());
+        jokeEndpointAsyncTask.execute();
+    }
+
 }

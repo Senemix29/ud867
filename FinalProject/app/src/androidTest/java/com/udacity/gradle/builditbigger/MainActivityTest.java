@@ -53,7 +53,6 @@ public class MainActivityTest {
 
     @Test
     public void testIfTheJokeDisplayerWasCalled() {
-        rule.getActivity().jokeService = jokeServiceMock;
 
         ActivityResult result = new ActivityResult(Activity.RESULT_OK, new Intent());
         intending(hasComponent(JokeDisplayerActivity.class.getName())).respondWith(result);
