@@ -1,5 +1,6 @@
 package com.udacity.gradle.builditbigger;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,7 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class MainActivityFragment extends Fragment implements View.OnClickListener{
+import br.com.natanximenes.jokeDisplayer.JokeDisplayerActivity;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
+public class MainActivityFragment extends Fragment implements View.OnClickListener, JokeEndpointAsyncTask.Listener {
     Button jokeButton;
     JokeEndpointAsyncTask jokeEndpointAsyncTask;
     JokeService jokeService;
@@ -34,8 +39,24 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
     }
 
     private void retrieveJoke() {
-        jokeEndpointAsyncTask = jokeService.retrieveJokeTask(getContext());
+        jokeEndpointAsyncTask = jokeService.retrieveJokeTask();
+        jokeEndpointAsyncTask.setListener(this);
         jokeEndpointAsyncTask.execute();
     }
 
+    @Override
+    public void onJokeRetrieved(String result) {
+        Intent jokeIntent = new Intent(getContext(), JokeDisplayerActivity.class);
+        jokeIntent.putExtra(JokeDisplayerActivity.JOKE, result);
+        jokeIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+        getContext().startActivity(jokeIntent);
+    }
+
+    @Override
+    public void onDestroy() {
+        if (jokeEndpointAsyncTask != null) {
+            jokeEndpointAsyncTask.setListener(null);
+        }
+        super.onDestroy();
+    }
 }

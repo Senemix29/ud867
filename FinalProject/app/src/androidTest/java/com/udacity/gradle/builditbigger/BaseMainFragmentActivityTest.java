@@ -23,7 +23,7 @@ public class BaseMainFragmentActivityTest implements FragmentTestRule.Listener<M
 
     @Before
     public void setUp() throws Exception {
-        jokeEndpointAsyncTaskMock = new JokeEndpointAsyncTask(InstrumentationRegistry.getTargetContext()) {
+        jokeEndpointAsyncTaskMock = new JokeEndpointAsyncTask() {
             @Override
             protected String doInBackground(Void... params) {
                 return JOKE_RESULT;
@@ -32,7 +32,7 @@ public class BaseMainFragmentActivityTest implements FragmentTestRule.Listener<M
 
         jokeServiceMock = new JokeService() {
             @Override
-            public JokeEndpointAsyncTask retrieveJokeTask(Context context) {
+            public JokeEndpointAsyncTask retrieveJokeTask() {
                 return jokeEndpointAsyncTaskMock;
             }
         };

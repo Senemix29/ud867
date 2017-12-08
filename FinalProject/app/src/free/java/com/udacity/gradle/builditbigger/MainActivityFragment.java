@@ -1,5 +1,6 @@
 package com.udacity.gradle.builditbigger;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,7 +13,11 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 
-public class MainActivityFragment extends Fragment implements View.OnClickListener {
+import br.com.natanximenes.jokeDisplayer.JokeDisplayerActivity;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
+public class MainActivityFragment extends Fragment implements View.OnClickListener, JokeEndpointAsyncTask.Listener {
     InterstitialAd interstitialAd;
     Button jokeButton;
     JokeEndpointAsyncTask jokeEndpointAsyncTask;
@@ -40,8 +45,17 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
         loadInterstitialAd();
     }
 
+    @Override
+    public void onJokeRetrieved(String result) {
+        Intent jokeIntent = new Intent(getContext(), JokeDisplayerActivity.class);
+        jokeIntent.putExtra(JokeDisplayerActivity.JOKE, result);
+        jokeIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+        getContext().startActivity(jokeIntent);
+    }
+
     private void retrieveJoke() {
-        jokeEndpointAsyncTask = jokeService.retrieveJokeTask(getContext());
+        jokeEndpointAsyncTask = jokeService.retrieveJokeTask();
+        jokeEndpointAsyncTask.setListener(this);
         jokeEndpointAsyncTask.execute();
     }
 
@@ -73,5 +87,13 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
         mAdView.loadAd(adRequest);
+    }
+
+    @Override
+    public void onDestroy() {
+        if (jokeEndpointAsyncTask != null) {
+            jokeEndpointAsyncTask.setListener(null);
+        }
+        super.onDestroy();
     }
 }
