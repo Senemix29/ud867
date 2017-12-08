@@ -15,6 +15,8 @@ import java.lang.ref.WeakReference;
 
 import br.com.natanximenes.jokeDisplayer.JokeDisplayerActivity;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 public class JokeEndpointAsyncTask extends AsyncTask<Void, Void, String> {
     private static JokeApi jokeService = null;
     private WeakReference<Context> context;
@@ -51,6 +53,7 @@ public class JokeEndpointAsyncTask extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String result) {
         Intent jokeIntent = new Intent(context.get().getApplicationContext(), JokeDisplayerActivity.class);
         jokeIntent.putExtra(JokeDisplayerActivity.JOKE, result);
+        jokeIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
         context.get().startActivity(jokeIntent);
     }
 }

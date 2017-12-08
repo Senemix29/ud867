@@ -18,7 +18,7 @@ public class FragmentTestRule<F extends Fragment> extends IntentsTestRule<TestAc
     private Bundle bundle;
     private Listener<F> listener;
 
-    public FragmentTestRule(final Class<F> fragmentClass, Listener<F> listener) {
+    public FragmentTestRule(final Class<F> fragmentClass) {
         super(TestActivity.class, true, false);
         this.fragmentClass = fragmentClass;
         this.listener = listener;
@@ -46,9 +46,12 @@ public class FragmentTestRule<F extends Fragment> extends IntentsTestRule<TestAc
         launchFragment(null);
     }
 
+    public void setListener(Listener<F> listener){
+        this.listener = listener;
+    }
+
     @Override
     protected void afterActivityLaunched() {
-        super.afterActivityLaunched();
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -74,6 +77,7 @@ public class FragmentTestRule<F extends Fragment> extends IntentsTestRule<TestAc
                     listener.afterFragmentTransaction(fragment);
             }
         });
+        super.afterActivityLaunched();
     }
 
     @Deprecated
