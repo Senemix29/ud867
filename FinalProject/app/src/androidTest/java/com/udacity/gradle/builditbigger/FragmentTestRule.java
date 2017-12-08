@@ -18,9 +18,10 @@ public class FragmentTestRule<F extends Fragment> extends IntentsTestRule<TestAc
     private Bundle bundle;
     private Listener<F> listener;
 
-    public FragmentTestRule(final Class<F> fragmentClass) {
+    public FragmentTestRule(final Class<F> fragmentClass, Listener<F> listener) {
         super(TestActivity.class, true, false);
         this.fragmentClass = fragmentClass;
+        this.listener = listener;
     }
 
     @Deprecated
