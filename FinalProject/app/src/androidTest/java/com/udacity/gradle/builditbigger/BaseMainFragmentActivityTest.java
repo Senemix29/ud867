@@ -46,9 +46,9 @@ public class BaseMainFragmentActivityTest implements FragmentTestRule.Listener<M
         this.fragment = fragment;
     }
 
-    protected void waitMilis(Long milis) {
+    protected void waitMilis(Long millis) {
         try {
-            Thread.sleep(milis);
+            Thread.sleep(millis);
         } catch (InterruptedException e) {
             return;
         }
