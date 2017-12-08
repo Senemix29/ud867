@@ -31,11 +31,6 @@ android {
             minifyEnabled false
         }
     }
-    sourceSets {
-        androidTest {
-            manifest.srcFile 'src/androidTest/AndroidManifest.xml'
-        }
-    }
 }
 
 dependencies {
