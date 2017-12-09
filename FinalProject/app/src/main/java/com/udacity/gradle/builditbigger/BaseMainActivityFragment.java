@@ -13,6 +13,7 @@ import android.widget.TextView;
 import br.com.natanximenes.jokeDisplayer.JokeDisplayerActivity;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -42,7 +43,7 @@ public class BaseMainActivityFragment extends Fragment implements JokeEndpointAs
         hideProgress();
         Intent jokeIntent = new Intent(getContext(), JokeDisplayerActivity.class);
         jokeIntent.putExtra(JokeDisplayerActivity.JOKE, result);
-        jokeIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+        jokeIntent.addFlags(FLAG_ACTIVITY_SINGLE_TOP);
         getContext().startActivity(jokeIntent);
     }
 
