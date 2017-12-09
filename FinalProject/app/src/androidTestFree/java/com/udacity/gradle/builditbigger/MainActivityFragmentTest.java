@@ -37,7 +37,7 @@ public class MainActivityFragmentTest extends BaseMainFragmentActivityTest {
 
         fragment.jokeService = jokeServiceMock;
 
-        waitMilis(2000L);
+        waitMilis(3000L);
 
         closeInterstitialAd();
 
