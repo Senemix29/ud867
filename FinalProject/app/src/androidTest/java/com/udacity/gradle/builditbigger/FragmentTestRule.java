@@ -1,4 +1,5 @@
-package com.udacity.gradle.builditbigger.test;
+package com.udacity.gradle.builditbigger;
+
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,8 +8,6 @@ import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-
-import com.udacity.gradle.builditbigger.R;
 
 import static junit.framework.Assert.fail;
 
@@ -22,6 +21,7 @@ public class FragmentTestRule<F extends Fragment> extends IntentsTestRule<TestAc
     public FragmentTestRule(final Class<F> fragmentClass) {
         super(TestActivity.class, true, false);
         this.fragmentClass = fragmentClass;
+        this.listener = listener;
     }
 
     @Deprecated
@@ -46,9 +46,12 @@ public class FragmentTestRule<F extends Fragment> extends IntentsTestRule<TestAc
         launchFragment(null);
     }
 
+    public void setListener(Listener<F> listener){
+        this.listener = listener;
+    }
+
     @Override
     protected void afterActivityLaunched() {
-        super.afterActivityLaunched();
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -74,6 +77,7 @@ public class FragmentTestRule<F extends Fragment> extends IntentsTestRule<TestAc
                     listener.afterFragmentTransaction(fragment);
             }
         });
+        super.afterActivityLaunched();
     }
 
     @Deprecated

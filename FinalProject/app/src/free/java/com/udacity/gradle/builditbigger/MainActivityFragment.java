@@ -1,22 +1,17 @@
 package com.udacity.gradle.builditbigger;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 
-public class MainActivityFragment extends Fragment implements View.OnClickListener {
+public class MainActivityFragment extends BaseMainActivityFragment implements View.OnClickListener, JokeEndpointAsyncTask.Listener {
     InterstitialAd interstitialAd;
-    Button jokeButton;
-    JokeEndpointAsyncTask jokeEndpointAsyncTask;
-    JokeService jokeService;
 
     public MainActivityFragment() {
     }
@@ -24,25 +19,17 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_main, container, false);
+        super.onCreateView(inflater, container, savedInstanceState);
 
-        jokeService = new JokeService();
-
-        jokeButton = root.findViewById(R.id.joke_button);
         jokeButton.setOnClickListener(this);
-
         loadBannerAd(root);
+
         return root;
     }
 
     @Override
     public void onClick(View view) {
         loadInterstitialAd();
-    }
-
-    private void retrieveJoke() {
-        jokeEndpointAsyncTask = jokeService.retrieveJokeTask(getContext());
-        jokeEndpointAsyncTask.execute();
     }
 
     private void loadInterstitialAd() {
